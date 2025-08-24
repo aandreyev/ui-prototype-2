@@ -2,6 +2,10 @@
 
 Initial scaffold for the project. Currently the repository is empty besides this README and supporting configuration files.
 
+## Reference Code (Non-shipping)
+
+This repo includes a git submodule under `reference/ALP` pointing to `AndreyevLawyers/ALP`. It is for reference only (architecture, patterns) and is excluded from diffs via `.gitmodules` `ignore = dirty` so local changes there won't appear in status. Do not import code directly from the reference module into shipping `src/` — replicate patterns instead.
+
 ## Getting Started
 
 1. (Optional) Decide the tech stack and add source files under an appropriate directory (e.g. `src/`).
