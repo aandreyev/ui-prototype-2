@@ -2,3 +2,7 @@
 	path = reference/ALP
 	url = https://github.com/AndreyevLawyers/ALP.git
 	ignore = dirty
+[submodule "reference/alp-business-logic"]
+	path = reference/alp-business-logic
+	url = https://github.com/aandreyev/alp-business-logic.git
+	ignore = dirty

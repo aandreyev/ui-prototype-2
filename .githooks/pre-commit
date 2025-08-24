@@ -3,20 +3,25 @@
 # Allows override by exporting ALLOW_SUBMODULE_UPDATE=1 before committing.
 set -euo pipefail
 
-# Detect if the submodule path itself is staged (pointer change)
-if git diff --cached --name-only | grep -q '^reference/ALP$'; then
-  if [[ "${ALLOW_SUBMODULE_UPDATE:-}" == "1" ]]; then
-    echo "[pre-commit] Warning: reference/ALP pointer update allowed via ALLOW_SUBMODULE_UPDATE=1"
-    exit 0
+# Detect if any reference submodule pointer path itself is staged (pointer change)
+blocked_paths=("reference/ALP" "reference/alp-business-logic")
+for p in "${blocked_paths[@]}"; do
+  if git diff --cached --name-only | grep -q "^${p}$"; then
+    if [[ "${ALLOW_SUBMODULE_UPDATE:-}" == "1" ]]; then
+      echo "[pre-commit] Warning: ${p} pointer update allowed via ALLOW_SUBMODULE_UPDATE=1"
+      continue
+    fi
+    echo >&2 "[pre-commit] Blocked: Attempt to commit submodule pointer update for ${p} (reference only)."
+    echo >&2 "           If intentional, rerun with ALLOW_SUBMODULE_UPDATE=1 git commit ..."
+    exit 1
   fi
-  echo >&2 "[pre-commit] Blocked: Attempt to commit submodule pointer update for reference/ALP (reference only)."
-  echo >&2 "           If intentional, rerun with ALLOW_SUBMODULE_UPDATE=1 git commit ..."
-  exit 1
-fi
+done
 
-# Optional: also warn if files inside submodule are staged (should not normally happen unless --force)
-if git diff --cached --name-only | grep -q '^reference/ALP/'; then
-  echo >&2 "[pre-commit] Warning: staged changes inside reference/ALP detected. These won't build into product code. Consider unstaging."
-fi
+# Warn if files inside any reference submodule are staged
+for p in "${blocked_paths[@]}"; do
+  if git diff --cached --name-only | grep -q "^${p}/"; then
+    echo >&2 "[pre-commit] Warning: staged changes inside ${p} detected. These won't build into product code. Consider unstaging."
+  fi
+done
 
 exit 0

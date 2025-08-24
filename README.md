@@ -4,11 +4,16 @@ Initial scaffold for the project. Currently the repository is empty besides this
 
 ## Reference Code (Non-shipping)
 
-This repo includes a git submodule under `reference/ALP` pointing to `AndreyevLawyers/ALP`. It is for reference only (architecture, patterns) and is excluded from diffs via `.gitmodules` `ignore = dirty` so local changes there won't appear in status. Do not import code directly from the reference module into shipping `src/` — replicate patterns instead.
+This repo includes git submodules under `reference/`:
+
+- `reference/ALP` → `AndreyevLawyers/ALP`
+- `reference/alp-business-logic` → `aandreyev/alp-business-logic`
+
+They are for reference only (architecture, patterns) and are excluded from diffs via `.gitmodules` `ignore = dirty` so local changes there won't appear in status. Do not import code directly from these reference modules into shipping `src/` — replicate patterns instead.
 
 ### Submodule Protection Hook
 
-A pre-commit hook in `.githooks/pre-commit` blocks committing updates to the `reference/ALP` submodule pointer (unless you explicitly allow it):
+A pre-commit hook in `.githooks/pre-commit` blocks committing updates to any reference submodule pointer (unless you explicitly allow it):
 
 Allow intentional pointer update:
 
