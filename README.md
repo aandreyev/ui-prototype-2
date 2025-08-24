@@ -6,6 +6,22 @@ Initial scaffold for the project. Currently the repository is empty besides this
 
 This repo includes a git submodule under `reference/ALP` pointing to `AndreyevLawyers/ALP`. It is for reference only (architecture, patterns) and is excluded from diffs via `.gitmodules` `ignore = dirty` so local changes there won't appear in status. Do not import code directly from the reference module into shipping `src/` — replicate patterns instead.
 
+### Submodule Protection Hook
+
+A pre-commit hook in `.githooks/pre-commit` blocks committing updates to the `reference/ALP` submodule pointer (unless you explicitly allow it):
+
+Allow intentional pointer update:
+
+```bash
+ALLOW_SUBMODULE_UPDATE=1 git commit -m "update reference submodule"
+```
+
+Install hooks locally (once):
+
+```bash
+git config core.hooksPath .githooks
+```
+
 ## Getting Started
 
 1. (Optional) Decide the tech stack and add source files under an appropriate directory (e.g. `src/`).
