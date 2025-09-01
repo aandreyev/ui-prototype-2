@@ -1,0 +1,21 @@
+{
+  "compilerOptions": {
+    "target": "ES2022",
+    "module": "ESNext",
+    "moduleResolution": "node",
+    "strict": true,
+    "jsx": "preserve",
+    "baseUrl": ".",
+    "paths": {
+      "@/*": ["src/*"],
+      "@shared/*": ["../../shared/*"],
+      "@lib/*": ["../../reference/ALP/ALP/App/src/lib/*"]
+    },
+    "types": ["vite/client"],
+    "lib": ["ES2022", "DOM"],
+    "skipLibCheck": true
+  },
+  "include": ["src", ".storybook", "mocks", "vite.config.ts"],
+  "exclude": ["node_modules"]
+}
+
